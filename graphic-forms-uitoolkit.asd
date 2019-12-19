@@ -18,7 +18,6 @@
 				:serial t
 				:components
 				(#+sbcl
-				 (:file "sbcl-callback-hacking")
 				 (:file "system-constants")
 				 (:file "system-classes")
 				 (:file "system-conditions") ; not a very good place

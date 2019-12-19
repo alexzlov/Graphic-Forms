@@ -22,7 +22,7 @@
 (defctype INT      :int)
 (defctype LANGID   :short)
 (defctype LONG     :long)
-(defctype LPARAM   :long)
+(defctype LPARAM   :uint64)
 (defctype LPCSTR   :pointer)
 (defctype LPCTSTR  :pointer)
 (defctype LPRECT   :pointer)
@@ -35,9 +35,10 @@
 (defctype TCHAR    :char)
 (defctype UINT     :unsigned-int)
 (defctype ULONG    :unsigned-long)
+(defctype ULONG-PTR :uint64)
 (defctype USHORT   :unsigned-short)
 (defctype WORD     :short)
-(defctype WPARAM   :unsigned-int)
+(defctype WPARAM   :uint64)
 
 #+sbcl
 (sb-alien:define-alien-type enumchildproc

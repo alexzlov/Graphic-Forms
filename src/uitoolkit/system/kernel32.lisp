@@ -17,6 +17,11 @@
   (hmodule HANDLE))
 
 (defcfun
+    ("SetLastError" set-last-error)
+    :void
+  (error-code DWORD))
+
+(defcfun
   ("GetLastError" get-last-error)
   DWORD)
 

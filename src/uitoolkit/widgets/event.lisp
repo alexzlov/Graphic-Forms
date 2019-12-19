@@ -73,15 +73,16 @@
   0)
 
 (defun get-class-wndproc (hwnd)
-  (let ((wndproc-val (gfs::get-class-long hwnd gfs::+gclp-wndproc+)))
-    (if (zerop wndproc-val)
+  (let ((wndproc-val (cffi:make-pointer (gfs::get-class-long-ptr-a hwnd gfs::+gclp-wndproc+))))
+    (if (cffi:null-pointer-p wndproc-val)
       (error 'gfs:win32-error :detail "get-class-long failed"))
-    (logand wndproc-val #xFFFFFFFF)))
+    wndproc-val))
 
 (defun subclass-wndproc (hwnd)
-  (if (zerop (gfs::set-window-long hwnd
+  (gfs::set-last-error 0)
+  (if (zerop (cffi:pointer-address (gfs::set-window-long-ptr-a hwnd
                                    gfs::+gwlp-wndproc+
-                                   (cffi:pointer-address (cffi:get-callback 'subclassing_wndproc))))
+                                   (cffi:get-callback 'subclassing_wndproc))))
     (error 'gfs:win32-error :detail "set-window-long failed")))
 
 (defun dispatch-control-notification (widget wparam-hi)
@@ -594,7 +595,7 @@
 ;;;
 
 (defmethod process-subclass-message (hwnd msg wparam lparam)
-  (gfs::call-window-proc (cffi:make-pointer (get-class-wndproc hwnd)) hwnd msg wparam lparam))
+  (gfs::call-window-proc (get-class-wndproc hwnd) hwnd msg wparam lparam))
 
 (defmethod process-subclass-message (hwnd (msg (eql gfs::+wm-destroy+)) wparam lparam)
   (declare (ignore wparam lparam))

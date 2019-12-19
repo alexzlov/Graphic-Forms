@@ -226,6 +226,12 @@
 ;;; that actually has to be referenced by this defcfun form.
 ;;;
 (defcfun
+  ("GetClassLongPtrA" get-class-long-ptr-a)
+  ULONG-PTR
+  (hwnd HANDLE)
+  (index INT))
+
+(defcfun
   ("GetClassLongA" get-class-long)
   :long
   (hwnd HANDLE)
@@ -566,7 +572,7 @@
   (hwnd HANDLE)
   (msg UINT)
   (wparam WPARAM)
-  (lparam WPARAM))
+  (lparam LPARAM))
 
 (defcfun
   ("SetActiveWindow" set-active-window)
@@ -630,6 +636,13 @@
 ;;; typedef'd to SetWindowLong, so that is the function
 ;;; that actually has to be referenced by this defcfun form.
 ;;;
+(defcfun
+    ("SetWindowLongPtrA" set-window-long-ptr-a)
+    (:pointer :long)
+  (hwnd HANDLE)
+  (index INT)
+  (new-long (:pointer :long)))
+
 (defcfun
   ("SetWindowLongA" set-window-long)
   :long
